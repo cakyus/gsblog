@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<title>Blog</title>
+		<link rel="stylesheet" href="blog.css" type="text/css" />
+		<script src="jquery.min.js" type="text/javascript"></script>
+		<style>
+			input[type=text], input[type=password], textarea {
+				font-family: Ubuntu Condensed;
+				font-size: 16px;
+				display: block;
+				margin: 5px 0px 5px 0px;
+				padding: 5px;
+			}
+			#blog-edit input[type=text], #blog-edit textarea {
+				width: 100%;
+			}
+			input[type=submit] {
+				padding: 5px;
+			}
+			textarea {
+				height: 250px;
+				margin: 5px 0px 5px 0px;
+			}
+			form {
+				width: 450px;
+			}
+			#blog-edit {
+				display: none;
+			}
+		</style>
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body>
+		<div id="blog-edit">
+			<form action="blog.php" method="POST">
+				Title <input type="text" name="title" />
+				Content <textarea name="content"></textarea>
+				Keywords <input type="text" name="keywords" />
+				<input type="submit" value="Save" />
+			</form>
+		</div>
+		<div id="blog-login">
+			<form action="blog.php" method="POST">
+				Username <input type="text" name="username" />
+				Password <input type="password" name="password" />
+				<input type="submit" value="Login" />
+			</form>
+		</div>
+	</body>
+</html>
