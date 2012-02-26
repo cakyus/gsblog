@@ -7,10 +7,13 @@
 		<script src="blog.php.js" type="text/javascript"></script>
 	</head>
 	<body>
-		<div id="tabNavigator">
-			<a href="#" onclick="showTab('form-login');" />Login</a>
+		<div id="menu-login" class="menu">
+			<a href="#" onclick="showTab('form-logout');" />Logout</a>
 			<a href="#" onclick="showTab('form-media');" />Media</a>
 			<a href="#" onclick="showTab('form-edit');"  />Blog</a>
+		</div>
+		<div id="menu" class="menu">
+			<a href="#" onclick="showTab('form-login');" />Login</a>
 		</div>
 		<div id="form-media" class="tab">
 			<input type="file" name="file" id="file"/>
@@ -39,14 +42,14 @@
 			Title <input type="text" name="title" />
 			Content <textarea name="content"></textarea>
 			Keywords <input type="text" name="keywords" />
-			<input type="button" value="Save" />
+			<input type="button" value="Save" onclick="myApp.formSubmit(this);" />
 		</div>
 		<div id="form-login" class="tab">
 			Password <input type="password" name="password" />
-			<input type="button" value="Login" onclick="submitForm(this);"/>
+			<input type="button" value="Login" onclick="myApp.formSubmit(this);"/>
 		</div>
 		<div id="form-logout" class="tab">
-			<input type="button" value="Logout" onclick="submitForm(this);"/>
+			<input type="button" value="Logout" onclick="myApp.formSubmit(this);"/>
 		</div>
 	</body>
 </html>

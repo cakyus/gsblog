@@ -25,13 +25,13 @@ textarea {
 form {
 	width: 450px;
 }
-#tabNavigator {
+.menu {
 	margin-bottom: 10px;
 }
-#tabNavigator a {
+.menu a {
 	display: inline-block;
 	padding: 5px;
 }
-.tab {
+.tab, .menu {
 	display: none;
 }

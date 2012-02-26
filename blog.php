@@ -38,14 +38,20 @@ class Application_Controller {
 		$this->response = $response;
 		// callback function mapping
 		if ($request->method == 'form-login') {
-			$this->login();
+			$this->form_login();
+		} elseif ($request->method == 'is-login') {
+			$this->is_login();
 		} else {
-			$response->error->code = 400;
-			$response->error->message = 'Invalid callback';
+			$this->response->error->code = 400;
+			$this->response->error->message = 'Invalid callback';
 		}	
 	}
 	
-	public function login() {
+	public function is_login() {
+		$this->response->result = 0;
+	}
+	
+	public function form_login() {
 		
 		$config = new Config;
 		
