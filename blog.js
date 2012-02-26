@@ -29,17 +29,18 @@ loadScript('jquery.min.js', loadScriptCallback);
 // here our main code
 function app() {
 	this.blogs = function () {
-		return new appBlogs();
+		return new app_blogs();
 	} 
 	this.show = function () {
-		var blog = this.blogs().getCurrent();
+		var blogs = new app_blogs;
+		var blog = blogs.getCurrent();
 		blog.show();
 	}
 }
 
-function appBlogs() {
+function app_blogs() {
 	this.getCurrent = function () {
-		var blog = new appBlog();
+		var blog = new app_blog();
 		blog.title = document.title;
 		blog.keywords = $('meta[name=keywords]').attr('content');
 		blog.author = $('meta[name=author]').attr('content');
@@ -49,7 +50,7 @@ function appBlogs() {
 	}
 }
 
-function appBlog() {
+function app_blog() {
 	this.title = '';
 	this.keywords = '';
 	this.author = '';
@@ -58,7 +59,11 @@ function appBlog() {
 	this.content = '';
 	this.show = function () {
 		// facebook comments, when not at localhost
-		var fbComments = new appPluginFacebookComments;
+		var pluginfacebookComments = new app_plugin_facebookComments;
+		var pluginSocial = new app_plugin_social;
+		var sidebarProfileCard = new app_plugin_profileCard;
+		var sidebarRecent = new app_plugin_recent;
+		var sidebarKeyword = new app_plugin_keywords;
 		
 		this.content = $('body').html();
 		$('body').html('');
@@ -70,38 +75,91 @@ function appBlog() {
 					+'<h6>Keywords: '+this.keywords+'</h6>'
 					+'<h6>Date: '+this.dateLastModified+'</h6>'
 				+'</div>'
-				// -- facebook comments --
-				+fbComments.getContent()
+				+pluginSocial.getContent()
+				+pluginfacebookComments.getContent()
 			+'</content>'
 			+'<div class="sidebar">'
-				+'<h1>Recently</h1>'
-				+'<div class="Recently">'
-					+'<a href="#">Curabitur sapien est, lobortis nec mattis sit amet</a>'
-					+'<a href="#">Nulla vitae elit quam</a>'
-					+'<a href="#">In condimentum, enim vel gravida viverra, ligula odio blandit sem</a>'
-					+'<a href="#">Fusce viverra pulvinar massa sit amet pellentesque</a>'
-					+'<a href="#">Proin varius odio a sem tempus imperdiet</a>'
-				+'</div>'
-				+'<h1>Keywords</h1>'
-				+'<div class="keyword">'
-					+'<a href="#">HTML</a>'
-					+'<a href="#">CSS</a>'
-					+'<a href="#">XML</a>'
-					+'<a href="#">XHTML</a>'
-					+'<a href="#">JavaScript</a>'
-					+'<a href="#">CSS</a>'
-					+'<a href="#">XML</a>'
-					+'<a href="#">XHTML</a>'
-					+'<a href="#">JavaScript</a>'
-					+'<a href="#">HTML</a>'
-				+'</div>'
+				+sidebarProfileCard.getContent()
+				+sidebarRecent.getContent()
 			+'</div>'
 			);
 	}
 }
 
-function appPluginFacebookComments() {
+function app_plugin_profileCard() {
+	this.getContent = function () {
+		return '<div class="profileCard">'
+			+'<h1>Code Blog</h1>'
+			+'Unlock Knowledge, Empowering Minds'
+			+'<br />by <a href="about.html">Yus Uf</a>'
+		+'</div>';
+	}
+}
+
+function app_plugin_recent() {
+	this.getContent = function () {
+		return '<h1>Recently</h1>'
+		+'<div class="recently">'
+			+'<a href="#">Curabitur sapien est, lobortis nec mattis sit amet</a>'
+			+'<a href="#">Nulla vitae elit quam</a>'
+			+'<a href="#">In condimentum, enim vel gravida viverra, ligula odio blandit sem</a>'
+			+'<a href="#">Fusce viverra pulvinar massa sit amet pellentesque</a>'
+			+'<a href="#">Proin varius odio a sem tempus imperdiet</a>'
+		+'</div>';
+	}
+}
+
+function app_plugin_keywords() {
+	this.getContent = function () {
+		return 	'<h1>Keywords</h1>'
+			+'<div class="keyword">'
+				+'<a href="#">HTML</a>'
+				+'<a href="#">CSS</a>'
+				+'<a href="#">XML</a>'
+				+'<a href="#">XHTML</a>'
+				+'<a href="#">JavaScript</a>'
+				+'<a href="#">CSS</a>'
+				+'<a href="#">XML</a>'
+				+'<a href="#">XHTML</a>'
+				+'<a href="#">JavaScript</a>'
+				+'<a href="#">HTML</a>'
+			+'</div>';
+	}
+}
+
+function app_plugin_social() {
 	
+	this.getContent = function() {
+		
+  		return '<div class="social">'
+			+'Share: <a href="#" onclick="window.open(\''
+				+'http://www.facebook.com/sharer.php?'
+					+'u='+encodeURIComponent(location.href)
+					+'&t='+encodeURIComponent(document.title)
+				+'\'); return false;">'
+				+'facebook'
+				+'</a>'
+			+', <a href="#" onclick="window.open(\''
+				+'http://twitter.com/home?status='
+					+document.title
+					+'. '+location.href
+				+'\'); return false;">'
+				+'tweeter'
+				+'</a>'
+			+', <a href="#" onclick="window.open(\''
+				+'https://plusone.google.com/_/+1/confirm?hl=en'
+					+'&url='+encodeURIComponent(location.href)
+					+'&title='+encodeURIComponent(document.title)
+				+'\'); return false;">'
+				+'google plus'
+				+'</a>'
+			+'</div>'
+			;
+	}
+}
+
+function app_plugin_facebookComments() {
+		
 	this.getContent = function() {
 		// disable on localhost
 		if (	window.location.host == '127.0.0.1'
@@ -125,4 +183,3 @@ function appPluginFacebookComments() {
 		return '';
 	}
 }
-

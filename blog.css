@@ -44,7 +44,6 @@ footer {
 	font-variant: small-caps;
 	text-transform: capitalize;
 	font-size: 120%;
-	letter-spacing: 2px;
 }
 .sidebar div {
 	margin-top: 5px;
@@ -58,8 +57,11 @@ footer {
 	display: inline-block;
 	padding: 4px;
 }
+.sidebar .profileCard a {
+	display: inline;
+}
 
-/** plugins facebook comments **/
-fb-comments {
-	width: 100%;
+.social {
+	font-size: 50%;
+	margin-bottom: 20px;
 }
