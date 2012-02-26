@@ -62,15 +62,23 @@
 				request.method = tabName;
 				request.id = 1;
 				request.jsonrpc = '2.0';
+				
+				// build parameters
 				request.params = {};
-				// @todo build params
+				$('#'+tabName+' input').each(function(){
+					request.params[this.name] = this.value;
+				});
+				$('#'+tabName+' textarea').each(function(){
+					request.params[this.name] = this.value;
+				});
+				
 				$.post(url, JSON.stringify(request), submitFormCallback, "json");
 			}
 			function submitFormCallback(response){
 				if (response.result != undefined) {
 					if (response.result.method != undefined) {
-						if (response.result.method == 'messageBox') {
-							messageBox(response.result.params);
+						if (response.result.method == 'displayMessage') {
+							displayMessage(response.result.params);
 						}
 					}
 				} else {
@@ -80,7 +88,7 @@
 						);
 				}	
 			}
-			function messageBox(params){
+			function displayMessage(params){
 				alert(params.message);
 			}						
 		</script>

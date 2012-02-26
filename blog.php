@@ -1,20 +1,15 @@
 <?php
 
-// the password can not be empty. the value of password below is md5 of
-// password and not the password it self.
-
-$CONFIG_PASSWORD = '456b7016a916a4b178dd72b947c152b7';
+include('config.php');
 
 $application = new Application;
 $application->start();
 
-// Main code
-if (empty($CONFIG_PASSWORD)) {
-	
-}
-
 class Application {
 	public function start() {
+		
+		session_start();
+		
 		$request = json_decode(file_get_contents('php://input'));
 		$response = new Response;
 
@@ -24,10 +19,50 @@ class Application {
 			exit($response);
 		}
 		
-		$response->result->method = 'messageBox';
-		$response->result->params->message = 'hello';
-
+		// callback function mapping
+		if ($request->method == 'tabLogin') {
+			$this->login($request, $response, $request->params->password);
+		} else {
+			$response->error->code = 400;
+			$response->error->message = 'Invalid callback';
+		}	
+		
 		echo $response;
+	}
+	
+	// @todo separate controller from class Application
+	public function login($request, $response, $password) {
+		
+		$config = new Config;
+		
+		if (md5($password) == $config->password) {
+			$response->result->method = 'displayMessage';
+			$response->result->params->message = 'Login 0k';
+		} else {
+			$response->result->method = 'displayMessage';
+			$response->result->params->message = 'Login Fail';
+		}
+		
+	}
+}
+
+class Application_Controller {
+	public function actionLogin() {
+		
+	}
+}
+
+class Config {
+	private $params;
+	public function __construct() {
+		global $CONFIG;
+		$this->params = $CONFIG;
+	}
+	public function __get($name) {
+		if (isset($this->params[$name])) {
+			return $this->params[$name];
+		}
+		return null;
 	}
 }
 
