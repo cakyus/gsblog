@@ -1,40 +1,40 @@
 
-function loadScript(url, callback) {
-    // adding the script tag to the head as suggested before
-   var head = document.getElementsByTagName('head')[0];
-   var script = document.createElement('script');
-   script.type = 'text/javascript';
-   script.src = url;
-
-   // then bind the event to the callback function 
-   // there are several events for cross browser compatibility
-   script.onreadystatechange = callback;
-   script.onload = callback;
-
-   // fire the loading
-   head.appendChild(script);
-}
-
-var loadScriptCallback = function() {
-   // here, do what ever you want
-	$(document).ready(function() {
-		// do stuff when DOM is ready
-		var myApp = new app;
-		myApp.show();
-	});
-};
-
-loadScript('jquery.min.js', loadScriptCallback);
+var myApp = new app; myApp.init();
 
 // here our main code
 function app() {
 	this.blogs = function () {
 		return new app_blogs();
-	} 
+	}
+	this.loadScript = function (url, callback) {
+		// adding the script tag to the head as suggested before
+	   var head = document.getElementsByTagName('head')[0];
+	   var script = document.createElement('script');
+	   script.type = 'text/javascript';
+	   script.src = url;
+
+	   // then bind the event to the callback function 
+	   // there are several events for cross browser compatibility
+	   script.onreadystatechange = callback;
+	   script.onload = callback;
+
+	   // fire the loading
+	   head.appendChild(script);
+	}
+	this.loadScriptCallback = function () {
+		$(document).ready(function() {
+			// do stuff when DOM is ready
+			myApp.show();
+		});
+	}
 	this.show = function () {
 		var blogs = new app_blogs;
 		var blog = blogs.getCurrent();
 		blog.show();
+	}
+	this.init = function () {
+		this.loadScript('../jquery.min.js', this.loadScriptCallback);
+		//this.show();
 	}
 }
 
@@ -65,6 +65,14 @@ function app_blog() {
 		var sidebarRecent = new app_plugin_recent;
 		var sidebarKeyword = new app_plugin_keywords;
 		
+		var blogKeyword = this.keywords;
+		
+		if (blogKeyword == undefined) {
+			blogKeyword = '';
+		} else {
+			blogKeyword = '<h6>Keywords: '+this.keywords+'</h6>';
+		}
+		
 		this.content = $('body').html();
 		$('body').html('');
 		$('body').append(
@@ -72,7 +80,7 @@ function app_blog() {
 				+'<div class="blog">'
 					+'<h1>'+this.title+'</h1>'
 					+this.content
-					+'<h6>Keywords: '+this.keywords+'</h6>'
+					+blogKeyword
 					+'<h6>Date: '+this.dateLastModified+'</h6>'
 				+'</div>'
 				+pluginSocial.getContent()
@@ -89,8 +97,8 @@ function app_blog() {
 function app_plugin_profileCard() {
 	this.getContent = function () {
 		return '<div class="profileCard">'
-			+'<h1>Code Blog</h1>'
-			+'Unlock Knowledge, Empowering Minds'
+			+'<h1><a href="index.html">Code Blog</a></h1>'
+			+'Unlocking Knowledge,<br />Empowering Minds'
 			+'<br />by <a href="about.html">Yus Uf</a>'
 		+'</div>';
 	}
@@ -98,7 +106,7 @@ function app_plugin_profileCard() {
 
 function app_plugin_recent() {
 	this.getContent = function () {
-		return '<h1>Recently</h1>'
+		return '<h1>Recently Baked</h1>'
 		+'<div class="recently">'
 			+'<a href="#">Curabitur sapien est, lobortis nec mattis sit amet</a>'
 			+'<a href="#">Nulla vitae elit quam</a>'

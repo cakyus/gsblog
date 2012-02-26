@@ -49,16 +49,13 @@ footer {
 	margin-top: 5px;
 	margin-bottom: 10px;
 }
-.sidebar a {
+.sidebar .recently a {
 	display: block;
 	padding: 4px;
 }
 .sidebar .keyword a {
 	display: inline-block;
 	padding: 4px;
-}
-.sidebar .profileCard a {
-	display: inline;
 }
 
 .social {
