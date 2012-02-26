@@ -1,4 +1,26 @@
 body {
+	position: relative;
 	margin: 20 auto;
-	width: 55%;
+	width: 95%;
+}
+content {
+	display: block;
+	width: 65%;
+}
+sidebar {
+	position: absolute;
+	right: 20px;
+	top: 0px;
+	text-align: left;
+	width: 30%;
+}
+footer {
+	margin-top: 20px;
+}
+.blogTitle {
+	font-size: 200%;
+	font-weight: bold;
+}
+.blogFooter {
+	font-size: 50%;
 }
