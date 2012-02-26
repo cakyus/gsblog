@@ -21,7 +21,11 @@ class Application {
 		if ($response->setRequest($request) == false) {
 			$response->error->code = 400;
 			$response->error->message = 'Bad request';
+			exit($response);
 		}
+		
+		$response->result->method = 'messageBox';
+		$response->result->params->message = 'hello';
 
 		echo $response;
 	}
@@ -29,14 +33,17 @@ class Application {
 
 class Response {
 	public $jsonrpc = '2.0';
-	public $result = '';
+	public $result = null;
 	public $error = null;
 	public $id = 0;
 	public function __construct() {
 		$this->error = new Response_Error;
+		$this->result = new Response_Result;
 	}
 	public function setRequest($request) {
-		
+		// @todo request validation
+		$this->id = $request->id;
+		return true;
 	}
 	public function __toString() {
 		if (empty($this->error->message)) {
@@ -45,9 +52,17 @@ class Response {
 			unset($this->result);
 		}
 		$result = json_encode($this);
-		$this->result = '';
+		$this->result = null;
 		$this->error = new Response_Error;
 		return $result;
+	}
+}
+
+class Response_Result {
+	public $method = '';
+	public $params = null;
+	public function __construct() {
+		$this->params = new stdClass;
 	}
 }
 

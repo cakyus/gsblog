@@ -68,14 +68,21 @@
 			}
 			function submitFormCallback(response){
 				if (response.result != undefined) {
-					alert(response.result);
+					if (response.result.method != undefined) {
+						if (response.result.method == 'messageBox') {
+							messageBox(response.result.params);
+						}
+					}
 				} else {
 					alert('Error:'
 						+' '+response.error.code
 						+' '+response.error.message
 						);
 				}	
-			}			
+			}
+			function messageBox(params){
+				alert(params.message);
+			}						
 		</script>
 	</head>
 	<body>
