@@ -5,7 +5,9 @@ include('config.php');
 $application = new Application;
 $application->start();
 
+// handle low level application
 class Application {
+	
 	public function start() {
 		
 		session_start();
@@ -13,41 +15,47 @@ class Application {
 		$request = json_decode(file_get_contents('php://input'));
 		$response = new Response;
 
+		// input validation
 		if ($response->setRequest($request) == false) {
 			$response->error->code = 400;
 			$response->error->message = 'Bad request';
 			exit($response);
 		}
 		
-		// callback function mapping
-		if ($request->method == 'tabLogin') {
-			$this->login($request, $response, $request->params->password);
-		} else {
-			$response->error->code = 400;
-			$response->error->message = 'Invalid callback';
-		}	
+		$controller = new Application_Controller($request, $response);
 		
 		echo $response;
-	}
-	
-	// @todo separate controller from class Application
-	public function login($request, $response, $password) {
-		
-		$config = new Config;
-		
-		if (md5($password) == $config->password) {
-			$response->result->method = 'displayMessage';
-			$response->result->params->message = 'Login 0k';
-		} else {
-			$response->result->method = 'displayMessage';
-			$response->result->params->message = 'Login Fail';
-		}
-		
 	}
 }
 
 class Application_Controller {
-	public function actionLogin() {
+	
+	public $request;
+	public $response;
+	
+	public function __construct($request, $response) {
+		$this->request = $request;
+		$this->response = $response;
+		// callback function mapping
+		if ($request->method == 'form-login') {
+			$this->login();
+		} else {
+			$response->error->code = 400;
+			$response->error->message = 'Invalid callback';
+		}	
+	}
+	
+	public function login() {
+		
+		$config = new Config;
+		
+		if (md5($this->request->params->password) == $config->password) {
+			$this->response->result->method = 'displayMessage';
+			$this->response->result->params->message = 'Login 0k';
+		} else {
+			$this->response->result->method = 'displayMessage';
+			$this->response->result->params->message = 'Login Fail';
+		}
 		
 	}
 }

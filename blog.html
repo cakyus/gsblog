@@ -16,7 +16,8 @@
 			input[type=file]{
 				display: none;
 			}			
-			#tabEdit input[type=text], #tabEdit textarea {
+			#form-edit input[type=text]
+			, #form-edit textarea {
 				width: 100%;
 			}
 			input[type=submit]
@@ -56,19 +57,20 @@
 				hideTabs();
 				$('#'+tabName).css('display','block');
 			}
-			function submitForm(tabName){
+			function submitForm(element){
+				
 				var url = 'blog.php';
 				var request = {};
-				request.method = tabName;
+				request.method = element.parentNode.id;
 				request.id = 1;
 				request.jsonrpc = '2.0';
 				
 				// build parameters
 				request.params = {};
-				$('#'+tabName+' input').each(function(){
+				$('#'+element.parentNode.id+' input').each(function(){
 					request.params[this.name] = this.value;
 				});
-				$('#'+tabName+' textarea').each(function(){
+				$('#'+element.parentNode.id+' textarea').each(function(){
 					request.params[this.name] = this.value;
 				});
 				
@@ -95,11 +97,11 @@
 	</head>
 	<body>
 		<div id="tabNavigator">
-			<a href="#" onclick="showTab('tabLogin');" />Login</a>
-			<a href="#" onclick="showTab('tabMedia');" />Media</a>
-			<a href="#" onclick="showTab('tabEdit');"  />Blog</a>
+			<a href="#" onclick="showTab('form-login');" />Login</a>
+			<a href="#" onclick="showTab('form-media');" />Media</a>
+			<a href="#" onclick="showTab('form-edit');"  />Blog</a>
 		</div>
-		<div id="tabMedia" class="tab">
+		<div id="form-media" class="tab">
 			<input type="file" name="file" id="file"/>
 			<input type="button" value="Upload" onclick="
 			var f = document.getElementById('file');
@@ -122,15 +124,18 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="tabEdit" class="tab">
+		<div id="form-edit" class="tab">
 			Title <input type="text" name="title" />
 			Content <textarea name="content"></textarea>
 			Keywords <input type="text" name="keywords" />
 			<input type="button" value="Save" />
 		</div>
-		<div id="tabLogin" class="tab">
+		<div id="form-login" class="tab">
 			Password <input type="password" name="password" />
-			<input type="button" value="Login" onclick="submitForm('tabLogin');"/>
+			<input type="button" value="Login" onclick="submitForm(this);"/>
+		</div>
+		<div id="form-logout" class="tab">
+			<input type="button" value="Logout" onclick="submitForm(this);"/>
 		</div>
 	</body>
 </html>
