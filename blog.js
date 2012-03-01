@@ -1,5 +1,5 @@
 
-var myApp = new app; myApp.init();
+var myApp = new app; myApp.initialize();
 
 // here our main code
 function app() {
@@ -32,9 +32,39 @@ function app() {
 		var blog = blogs.getCurrent();
 		blog.show();
 	}
-	this.init = function () {
+	this.initialize = function () {
 		this.loadScript('../jquery.min.js', this.loadScriptCallback);
 		//this.show();
+	}
+}
+
+app.prototype.widgets = [];
+
+app.prototype.widgets.profileCard = [];
+app.prototype.widgets.profileCard.prototype = new widget;
+app.prototype.widgets.profileCard.toString = function (){
+	this.title = '<a href="index.html">Code Blog</a>';
+	this.content = 'Unlocking Knowledge,<br />Empowering Minds'
+		+'<br />by <a href="about.html">Yus Uf</a>'
+		;
+	return widget.prototype.toString.call(this);
+};
+
+function app_plugin_recent() {
+	this.getContent = function () {
+		return '<h1>Recently Baked</h1>'
+		+'<div class="recently">'
+			+'<a href="#">Curabitur sapien est, lobortis nec mattis sit amet</a>'
+			+'<a href="#">Nulla vitae elit quam</a>'
+			+'<a href="#">In condimentum, enim vel gravida viverra, ligula odio blandit sem</a>'
+			+'<a href="#">Fusce viverra pulvinar massa sit amet pellentesque</a>'
+			+'<a href="#">Proin varius odio a sem tempus imperdiet</a>'
+			+'<a href="#">Curabitur sapien est, lobortis nec mattis sit amet</a>'
+			+'<a href="#">Nulla vitae elit quam</a>'
+			+'<a href="#">In condimentum, enim vel gravida viverra, ligula odio blandit sem</a>'
+			+'<a href="#">Fusce viverra pulvinar massa sit amet pellentesque</a>'
+			+'<a href="#">Proin varius odio a sem tempus imperdiet</a>'
+		+'</div>';
 	}
 }
 
@@ -73,6 +103,19 @@ function app_blog() {
 			blogKeyword = '<h6>Keywords: '+this.keywords+'</h6>';
 		}
 		
+		// var widget = myApp.widgets['profileCard'];
+		var widgetContent = '';
+		var widgetNames = ['profileCard'];
+		
+		for (i = 0; i < widgetNames.length; i++){
+			widgetContent += '<div class="'+widgetNames[i]+' widget">'
+				+ myApp.widgets[widgetNames[i]]
+				+ '</div>'
+				;
+		}
+		
+		// widgetContent += iApp.widgets.profileCard;
+		
 		this.content = $('body').html();
 		$('body').html('');
 		$('body').append(
@@ -87,7 +130,8 @@ function app_blog() {
 				+pluginfacebookComments.getContent()
 			+'</content>'
 			+'<div class="sidebar">'
-				+sidebarProfileCard.getContent()
+				// +sidebarProfileCard.getContent()
+				+widgetContent
 				+sidebarRecent.getContent()
 			+'</div>'
 			);
@@ -196,3 +240,11 @@ function app_plugin_facebookComments() {
 		return '';
 	}
 }
+
+function widget() {}
+	widget.prototype.title = '';
+	widget.prototype.content = '';
+	widget.prototype.toString = function () {
+	return '<h1>' + this.title + '</h1>' + this.content;
+};
+
