@@ -50,21 +50,26 @@ app.prototype.widgets.profileCard.toString = function (){
 	return widget.prototype.toString.call(this);
 };
 
+app.prototype.widgets.recentBlogs = [];
+app.prototype.widgets.recentBlogs.prototype = new widget;
+app.prototype.widgets.recentBlogs.toString = function (){
+	this.title = 'Recently Baked';
+	this.content = '<a href="#">Curabitur sapien est, lobortis nec mattis sit amet</a>'
+			+'<a href="#">Nulla vitae elit quam</a>'
+			+'<a href="#">In condimentum, enim vel gravida viverra, ligula odio blandit sem</a>'
+			+'<a href="#">Fusce viverra pulvinar massa sit amet pellentesque</a>'
+			+'<a href="#">Proin varius odio a sem tempus imperdiet</a>'
+			+'<a href="#">Curabitur sapien est, lobortis nec mattis sit amet</a>'
+			+'<a href="#">Nulla vitae elit quam</a>'
+			+'<a href="#">In condimentum, enim vel gravida viverra, ligula odio blandit sem</a>'
+			+'<a href="#">Fusce viverra pulvinar massa sit amet pellentesque</a>'
+			+'<a href="#">Proin varius odio a sem tempus imperdiet</a>'
+			;
+	return widget.prototype.toString.call(this);
+};
+
 function app_plugin_recent() {
 	this.getContent = function () {
-		return '<h1>Recently Baked</h1>'
-		+'<div class="recently">'
-			+'<a href="#">Curabitur sapien est, lobortis nec mattis sit amet</a>'
-			+'<a href="#">Nulla vitae elit quam</a>'
-			+'<a href="#">In condimentum, enim vel gravida viverra, ligula odio blandit sem</a>'
-			+'<a href="#">Fusce viverra pulvinar massa sit amet pellentesque</a>'
-			+'<a href="#">Proin varius odio a sem tempus imperdiet</a>'
-			+'<a href="#">Curabitur sapien est, lobortis nec mattis sit amet</a>'
-			+'<a href="#">Nulla vitae elit quam</a>'
-			+'<a href="#">In condimentum, enim vel gravida viverra, ligula odio blandit sem</a>'
-			+'<a href="#">Fusce viverra pulvinar massa sit amet pellentesque</a>'
-			+'<a href="#">Proin varius odio a sem tempus imperdiet</a>'
-		+'</div>';
 	}
 }
 
@@ -105,7 +110,7 @@ function app_blog() {
 		
 		// var widget = myApp.widgets['profileCard'];
 		var widgetContent = '';
-		var widgetNames = ['profileCard'];
+		var widgetNames = ['profileCard','recentBlogs'];
 		
 		for (i = 0; i < widgetNames.length; i++){
 			widgetContent += '<div class="'+widgetNames[i]+' widget">'
