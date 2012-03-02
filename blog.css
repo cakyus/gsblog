@@ -49,7 +49,7 @@ footer {
 	margin-top: 5px;
 	margin-bottom: 10px;
 }
-.sidebar .recently a {
+.sidebar a.menu {
 	display: block;
 	padding: 4px;
 }

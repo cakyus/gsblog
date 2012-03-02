@@ -54,16 +54,16 @@ app.prototype.widgets.recentBlogs = [];
 app.prototype.widgets.recentBlogs.prototype = new widget;
 app.prototype.widgets.recentBlogs.toString = function (){
 	this.title = 'Recently Baked';
-	this.content = '<a href="#">Curabitur sapien est, lobortis nec mattis sit amet</a>'
-			+'<a href="#">Nulla vitae elit quam</a>'
-			+'<a href="#">In condimentum, enim vel gravida viverra, ligula odio blandit sem</a>'
-			+'<a href="#">Fusce viverra pulvinar massa sit amet pellentesque</a>'
-			+'<a href="#">Proin varius odio a sem tempus imperdiet</a>'
-			+'<a href="#">Curabitur sapien est, lobortis nec mattis sit amet</a>'
-			+'<a href="#">Nulla vitae elit quam</a>'
-			+'<a href="#">In condimentum, enim vel gravida viverra, ligula odio blandit sem</a>'
-			+'<a href="#">Fusce viverra pulvinar massa sit amet pellentesque</a>'
-			+'<a href="#">Proin varius odio a sem tempus imperdiet</a>'
+	this.content = '<a href="#" class="menu" >Curabitur sapien est, lobortis nec mattis sit amet</a>'
+			+'<a href="#" class="menu">Nulla vitae elit quam</a>'
+			+'<a href="#" class="menu">In condimentum, enim vel gravida viverra, ligula odio blandit sem</a>'
+			+'<a href="#" class="menu">Fusce viverra pulvinar massa sit amet pellentesque</a>'
+			+'<a href="#" class="menu">Proin varius odio a sem tempus imperdiet</a>'
+			+'<a href="#" class="menu">Curabitur sapien est, lobortis nec mattis sit amet</a>'
+			+'<a href="#" class="menu">Nulla vitae elit quam</a>'
+			+'<a href="#" class="menu">In condimentum, enim vel gravida viverra, ligula odio blandit sem</a>'
+			+'<a href="#" class="menu">Fusce viverra pulvinar massa sit amet pellentesque</a>'
+			+'<a href="#" class="menu">Proin varius odio a sem tempus imperdiet</a>'
 			;
 	return widget.prototype.toString.call(this);
 };
@@ -137,7 +137,6 @@ function app_blog() {
 			+'<div class="sidebar">'
 				// +sidebarProfileCard.getContent()
 				+widgetContent
-				+sidebarRecent.getContent()
 			+'</div>'
 			);
 	}
